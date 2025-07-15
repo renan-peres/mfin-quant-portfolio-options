@@ -1,0 +1,49 @@
+{
+    "name": "Fabric Remote Tools",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+    "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+            "zsh": {
+                "path": "/bin/zsh"
+            }
+        },
+        "python.defaultInterpreterPath": "/workspace/.venv/bin/python",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "jupyter.notebook.defaultKernel": ".venv",
+        "python.terminal.activateEnvironment": true
+    },
+    "extensions": [
+        "ms-python.python",
+        "mechatroner.rainbow-csv",
+        "ms-toolsai.jupyter",
+        "ms-python.vscode-pylance"
+    ],
+    "recommendations": [
+        "continue.continue",
+        "ms-python.black-formatter",
+        "matangover.mypy"
+    ],
+    "remoteEnv": {
+        "AZURE_CLIENT_ID": "${localEnv:AZURE_CLIENT_ID}",
+        "AZURE_TENANT_ID": "${localEnv:AZURE_TENANT_ID}",
+        "AZURE_CLIENT_SECRET": "${localEnv:AZURE_CLIENT_SECRET}",
+        "ACCOUNT_NAME": "${localEnv:ACCOUNT_NAME}",
+        "WORKSPACE_ID": "${localEnv:WORKSPACE_ID}",
+        "WORKSPACE_NAME": "${localEnv:WORKSPACE_NAME}",
+        "LAKEHOUSE_ID": "${localEnv:LAKEHOUSE_ID}",
+        "LAKEHOUSE_NAME": "${localEnv:LAKEHOUSE_NAME}",
+        "ADO_PERSONAL_ACCESS_TOKEN": "${localEnv:ADO_PERSONAL_ACCESS_TOKEN}",
+        "ADO_ORGANIZATIONAL_URL": "${localEnv:ADO_ORGANIZATIONAL_URL}",
+        "ADO_PROJECT_NAME": "${localEnv:ADO_PROJECT_NAME}",
+        "ADO_REPO_NAME": "${localEnv:ADO_REPO_NAME}",
+        "GH_PERSONAL_ACCESS_TOKEN": "${localEnv:GH_PERSONAL_ACCESS_TOKEN}",
+        "GH_USERNAME": "${localEnv:GH_USERNAME}",
+        "GH_REPO_NAME": "${localEnv:GH_REPO_NAME}"
+    },
+    "postCreateCommand": "export PATH=\"$PATH:/root/.local/bin\" && /root/.local/bin/uv venv && . .venv/bin/activate && /root/.local/bin/uv pip install --upgrade pip && /root/.local/bin/uv pip install -r requirements.txt python-dotenv ipykernel --prerelease=allow && python -m ipykernel install --user --name=.venv --display-name \"Python (.venv)\" && python /workspace/set_env_vars.py"
+}
