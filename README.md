@@ -1,10 +1,10 @@
-# 🚀 Algorithmic Trading Portfolio Management
+# 🚀 Quantmental Portfolio Construction (With Options)
 
 [![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-> A sophisticated algorithmic trading system implementing both buy-and-hold and short-term trading strategies using modern portfolio theory and quantitative analysis.
+> A sophisticated algorithmic trading system implementing quantitative portfolio management strategies with long-term optimization, short-term trading signals, and options strategies using modern portfolio theory and sentiment analysis.
 
 ## 📋 Table of Contents
 
@@ -12,54 +12,60 @@
 - [✨ Key Features](#-key-features)
 - [🏗️ System Architecture](#-system-architecture)
 - [🚀 Quick Start](#-quick-start)
-- [📊 Strategy Details](#-strategy-details)
+- [📊 Strategy Implementation](#-strategy-implementation)
 - [🔧 Configuration](#-configuration)
 - [📁 Project Structure](#-project-structure)
-- [📊 Dashboard](#-dashboard)
+- [📊 Performance Analytics](#-performance-analytics)
 - [🔄 Automated Pipelines](#-automated-pipelines)
 - [🙏 Acknowledgments](#-acknowledgments)
 - [📄 License](#-license)
 
 ## 🎯 Project Overview
 
-This project implements a comprehensive algorithmic trading system that combines:
-- **Long-term investment strategies** using Modern Portfolio Theory (Markowitz optimization)
-- **Short-term trading strategies** with technical indicators and sentiment analysis
-- **Risk management** through systematic backtesting and performance evaluation
-- **Automated execution** via scheduled pipelines and monitoring
+This project implements a comprehensive quantitative portfolio management system that combines:
+- **Long-term portfolio optimization** using Markowitz Mean-Variance theory with fundamental screening
+- **Short-term trading strategies** incorporating technical indicators and news sentiment analysis
+- **Options strategies** for hedging and income generation
+- **Automated backtesting and performance evaluation** with QuantStats integration
+- **Risk management** through systematic monitoring and reporting
 
 ## ✨ Key Features
 
 ### 📊 **Data Collection & Processing**
-- **Multi-source data aggregation**: Yahoo Finance, OpenBB, Financial Modeling Prep API
-- **Real-time & historical data**: Stock prices, fundamentals, economic indicators
-- **News sentiment analysis**: TextBlob-based sentiment scoring
-- **Efficient data storage**: Polars & DuckDB for high-performance analytics
+- **Multi-source data aggregation**: Yahoo Finance, Financial Modeling Prep API, news sentiment
+- **Real-time & historical data**: Stock prices, fundamentals, options data, economic indicators
+- **News sentiment analysis**: TextBlob-based sentiment scoring from financial news
+- **Efficient data storage**: Polars DataFrame operations for high-performance analytics
 
 ### 🎯 **Portfolio Strategies**
 
-#### Long-term Strategy (Buy & Hold)
-- **Markowitz Mean-Variance Optimization**
+#### Long-term Strategy (70% Capital Allocation)
+- **Markowitz Mean-Variance Optimization** with quarterly rebalancing
 - **Fundamental screening criteria**:
   - Market Cap: $50B - $500B
   - P/E Ratio: < 30
   - P/S Ratio: ≤ 5
   - P/B Ratio: 0 < x ≤ 10
   - Operating Margin: > 20%
-- **Sector diversification constraints**
-- **Monthly rebalancing**
+- **Portfolio constraints**: Min 5 assets, max 30% allocation per asset, max 2 assets per sector
 
-#### Short-term Strategy
-- **Technical indicator integration**
-- **Sentiment-driven signals**
-- **Weekly rebalancing**
-- **Risk-adjusted position sizing**
+#### Short-term Strategy (25% Capital Allocation)
+- **Technical indicator integration**: SMA, EMA, RSI, Bollinger Bands
+- **Sentiment-driven signals** from news analysis
+- **Parameter optimization** using Sharpe/Sortino ratio maximization
+- **Weekly rebalancing** with active position management
+
+#### Options Strategy (5% Capital Allocation)
+- **Hedging strategies**: Protective puts, collar strategies
+- **Income generation**: Covered calls, cash-secured puts
+- **Greeks analysis**: Delta, gamma, theta, vega monitoring
+- **Implied volatility** assessment and volume analysis
 
 ### 📈 **Advanced Analytics**
-- **QuantStats integration** for comprehensive performance reporting
-- **Statistical significance testing**
-- **Monte Carlo simulations**
-- **Drawdown analysis and risk metrics**
+- **QuantStats integration** with custom HTML report enhancements
+- **Benchmark selection and comparison** using regression analysis
+- **Monte Carlo simulations** for risk assessment
+- **Performance attribution** analysis across strategies
 
 ## 🎨 System Architecture
 
@@ -185,150 +191,157 @@ flowchart TB
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- Python 3.8+
-- API Keys (optional but recommended):
-  - Financial Modeling Prep API
-  - OpenBB Terminal
-
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/renan-peres/mfin-algo-trading-team.git
-cd mfin-algo-trading-team
+git clone https://github.com/renan-peres/mfin-quant-portfolio-options.git
+cd mfin-quant-portfolio-options
 
-# Install Astral UV (for reproducible venvs)
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your API keys
+
+# Create virtual environment using UV (recommended)
 curl -LsSf https://astral.sh/uv/install.sh | env INSTALLER_NO_MODIFY_PATH=1 sh
-
-# Create virtual environment
-uv venv                                 # or: python3 -m venv .venv
-source .venv/bin/activate               # or: source venv/bin/activate 
+uv venv
+source .venv/bin/activate
 
 # Install dependencies
 uv pip install -r requirements.txt
-
-# Set up environment variables (optional)
-cp .env.example .env
-# Edit .env with your API keys
 ```
 
 ### Quick Run
 
 ```bash
-# Run the complete pipeline
+# Run the complete automated pipeline
 bash pipelines/weekly_pipeline.sh
 
-# Or run individual components
-jupyter notebook notebooks/01_data_collection.ipynb
+# Or run individual notebook components
+jupyter notebook 01_long_term_portfolio.ipynb
+jupyter notebook 02_short_term_portfolio.ipynb
+jupyter notebook 06_options_strategy.ipynb
 ```
 
-## 📊 Strategy Details
+## 📊 Strategy Implementation
 
-### **Long-Term Portfolio Construction (85% Capital Allocation)**
+### **Long-Term Portfolio (01_long_term_portfolio.ipynb)**
+1. **S&P 500 Data Collection**: Fetch historical price and fundamental data
+2. **Fundamental Screening**: Apply quantitative filters for quality stock selection
+3. **Markowitz Optimization**: Calculate optimal portfolio weights with constraints
+4. **Backtesting**: Historical performance evaluation with transaction costs
 
-1. **Data Collection**: Scrape S&P 500 constituents and fundamental data
-2. **Screening**: Apply fundamental filters to identify quality stocks
-3. **Optimization**: Use Markowitz optimization with constraints:
-   - Minimum 5 assets, maximum 30% allocation per asset
-   - Maximum 2 assets per sector
-   - Minimum 5% allocation per selected asset
-4. **Backtesting**: Monthly rebalancing with transaction cost modeling
+### **Short-Term Portfolio (02_short_term_portfolio.ipynb)**
+1. **Sentiment Analysis**: Process financial news using TextBlob
+2. **Technical Indicators**: Calculate momentum and trend-following signals
+3. **Parameter Selection**: Optimize indicator parameters for maximum risk-adjusted returns
+4. **Signal Generation**: Generate buy/sell/hold signals for weekly rebalancing
 
-![Assets Risk-Return Profile](img/risk_return_profile.png)
-![Markowitz Efficient Frontier](img/markowitz_ef.png)
+### **Master Strategy (04_master_strategy.ipynb)**
+- **Portfolio Combination**: Integrate all three strategies with capital allocation
+- **Benchmark Selection**: Statistical analysis for appropriate benchmark selection
+- **Performance Attribution**: Analyze contribution from each strategy component
 
-### **Sort-Term Portfolio Construction (15% Capital Allocation)**
-![Parameter Selection](img/parameter_selection.png)
-![Trading Signals](img/trading_signals.png)
+### **Options Strategy (05_options_strategy.ipynb)**
+1. **Options Data Analysis**: IV surface, Greeks calculation, volume analysis
+2. **Hedging Implementation**: Protective puts and collar strategies
+3. **Income Generation**: Covered calls and cash-secured puts
+4. **Risk Assessment**: Portfolio-level Greeks monitoring
 
 ## 🔧 Configuration
 
 ### Environment Variables
 
 ```bash
-# API Configuration
-FMP_API_KEY=your_fmp_api_key
-OPENBB_API_KEY=your_openbb_key
+# .env file
+FMP_API_KEY=your_financial_modeling_prep_api_key
+OPENBB_API_KEY=your_openbb_api_key
 
 # Portfolio Parameters
-MIN_ASSETS=5
-MAX_ALLOCATION=0.30
-MIN_ALLOCATION=0.05
-REBALANCING_FREQUENCY=monthly
-
-# Risk Management
 RISK_FREE_RATE=0.02
-MAX_DRAWDOWN_THRESHOLD=0.25
+REBALANCING_FREQUENCY=weekly
 ```
 
-### Strategy Configuration
+### Screening Criteria
+
+The fundamental screening criteria are implemented in the long-term portfolio notebook:
 
 ```python
-# config/trading_config.py
 SCREENING_CRITERIA = {
-    "market_cap": {"min": 50e9, "max": 500e9},
+    "market_cap": {"min": 50e9, "max": 500e9},  # $50B - $500B
     "pe_ratio": {"max": 30},
     "ps_ratio": {"max": 5},
     "pb_ratio": {"min": 0, "max": 10},
-    "operating_margin": {"min": 0.20}
-}
-
-PORTFOLIO_CONSTRAINTS = {
-    "min_assets": 5,
-    "max_allocation": 0.30,
-    "min_allocation": 0.05,
-    "max_sector_allocation": 2
+    "operating_margin": {"min": 0.20}  # 20%
 }
 ```
 
 ## 📁 Project Structure
 
 ```
-mfin-algo-trading-team/
-├── 📁 src/                    # Source code
-│   ├── data_collection/       # Data scraping modules
-│   ├── portfolio/            # Portfolio optimization
-│   ├── backtesting/          # Strategy testing
-│   └── analysis/             # Performance analysis
-├── 📁 notebooks/             # Jupyter notebooks
-│   ├── 01_data_collection.ipynb
-│   ├── 02_portfolio_optimization.ipynb
-│   ├── 03_backtesting.ipynb
-│   └── 04_performance_analysis.ipynb
-├── 📁 data/                  # Data storage
-│   ├── raw/                  # Raw market data
-│   ├── processed/            # Cleaned datasets
-│   └── results/              # Analysis outputs
-├── 📁 tests/                 # Test suite
-├── 📁 config/                # Configuration files
-├── 📁 pipelines/             # Automation scripts
-└── 📁 docs/                  # Documentation
+mfin-quant-portfolio-options/
+├── 📊 Jupyter Notebooks
+│   ├── 01_long_term_portfolio.ipynb     # Markowitz optimization strategy
+│   ├── 02_short_term_portfolio.ipynb    # Technical + sentiment strategy  
+│   ├── 03_benchmark_selection.ipynb     # Statistical benchmark analysis
+│   ├── 04_master_strategy.ipynb         # Combined portfolio strategy
+│   └── 05_options_strategy.ipynb        # Options hedging & income
+├── 📁 py/                               # Python modules
+│   ├── quantstats_fix.py               # Enhanced QuantStats reporting
+│   ├── sentiment_analysis.ipynb        # News sentiment processing
+│   └── fetch_fundamentals.py           # Data collection utilities
+├── 📁 data/                            # Data storage
+│   ├── daily_benchmark_quotes.csv      # Benchmark price data
+│   ├── scrape_fundamentals.ipynb       # Fundamental data collection
+│   └── [various CSV files]             # Processed datasets
+├── 📁 charts/                          # Generated visualizations
+│   ├── efficient_frontier-*.html       # Interactive Markowitz charts
+│   └── risk_return_profile-*.html      # Risk-return analysis
+├── 📁 pipelines/                       # Automation scripts
+│   └── weekly_pipeline.sh              # Automated execution pipeline
+├── 📁 portfolios/                      # Portfolio outputs
+├── 📁 .devcontainer/                   # Development environment
+└── 📄 requirements.txt                 # Python dependencies
 ```
 
-## 📊 Dashboard
+## 📊 Performance Analytics
 
-The system generates comprehensive performance reports including:
+### QuantStats Integration
+The system uses an enhanced version of QuantStats with custom features:
+- **Download functionality** for HTML reports
+- **Custom attribution** and benchmark comparison
+- **Interactive charts** with Plotly integration
+- **Risk metrics**: VaR, CVaR, maximum drawdown, Sortino ratio
 
-- **Portfolio Performance**: Returns, volatility, Sharpe ratio
-- **Risk Analysis**: VaR, CVaR, maximum drawdown
-- **Attribution Analysis**: Sector and security contribution
-- **Benchmark Comparison**: Alpha, beta, information ratio
+### Key Metrics Tracked
+- **Returns**: Absolute and risk-adjusted returns
+- **Volatility**: Portfolio standard deviation and downside deviation
+- **Sharpe/Sortino Ratios**: Risk-adjusted performance measures
+- **Drawdown Analysis**: Maximum drawdown and recovery periods
+- **Beta/Alpha**: Market sensitivity and excess returns
 
 ## 🔄 Automated Pipelines
 
-The system includes automated pipelines for:
+The [`weekly_pipeline.sh`](pipelines/weekly_pipeline.sh) script provides automated execution:
 
 ```bash
-# Weekly data update and rebalancing
+# Weekly data update and portfolio rebalancing
 bash pipelines/weekly_pipeline.sh
 
-# Monthly performance reporting
-bash pipelines/monthly_report.sh
-
-# Risk monitoring (daily)
-bash pipelines/risk_monitor.sh
+# The pipeline includes:
+# 1. Data collection and validation
+# 2. Fundamental screening updates
+# 3. Portfolio optimization and rebalancing
+# 4. Performance reporting and risk monitoring
+# 5. HTML report generation with QuantStats
 ```
+
+### Pipeline Features
+- **Dependency management** with UV virtual environments
+- **Jupyter notebook execution** with error handling
+- **Data validation** and quality checks
+- **Automated report generation** with download functionality
+- **Git integration** for version control
 
 ## 📄 License
 
@@ -336,11 +349,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- **Modern Portfolio Theory**: Harry Markowitz
-- **QuantStats**: Performance analytics library
-- **OpenBB Platform**: Financial data integration
-- **bt Library**: Backtesting framework
+- **Modern Portfolio Theory**: Harry Markowitz for foundational optimization theory
+- **QuantStats**: Ran Aroussi for comprehensive performance analytics
+- **Financial Modeling Prep**: API for fundamental and market data
+- **TextBlob**: Sentiment analysis capabilities for news processing
+- **Polars**: High-performance DataFrame operations
 
 ---
 
-**⚠️ Disclaimer**: This software is for educational and research purposes only. Past performance does not guarantee future results. Always consult with financial advisors before making investment decisions.
+**⚠️ Disclaimer**: This software is for educational and research purposes only. Past performance does not guarantee future results. Options trading involves substantial risk and is not suitable for all investors. Always consult with qualified financial advisors before making investment decisions.
